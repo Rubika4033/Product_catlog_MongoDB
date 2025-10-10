@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Login - MongoNest</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Login to MongoNest</h2>
+    <form id="loginForm">
+      <input id="email" type="email" placeholder="Email" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+    <div id="loginMsg" style="margin-top:12px;color:#b03a7b;"></div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:5000/api";
+
+    function setToken(t) {
+      localStorage.setItem("mn_token", t);
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("loginMsg");
+      msg.textContent = "";
+
+      try {
+        const res = await fetch(API_BASE + "/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          msg.textContent = data.message || "Login failed";
+          return;
+        }
+
+        if (data.token) {
+          setToken(data.token);
+          window.location.href = "index.html";
+        } else {
+          msg.textContent = "Token not received. Please try again.";
+        }
+      } catch (err) {
+        msg.textContent = err.message || "Login error";
+      }
+    });
+  </script>
+</body>
+</html>

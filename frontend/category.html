@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categories | MongoNest</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="header">
+  <h2 id="welcomeUser">Welcome!</h2>
+  <div class="logo">MongoNest</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html">Signup</a>
+    <a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a>
+    <button id="logoutBtn" class="btn">Logout</button>
+  </nav>
+</header>
+
+<main style="padding: 2rem; max-width:1100px;margin:0 auto;">
+  <h2 style="text-align:center; margin-bottom:1rem; background: linear-gradient(90deg,#7b2ff7,#f107a3); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Categories</h2>
+  <div id="categoryButtons" style="text-align:center; margin-bottom:1.5rem;"></div>
+  <div id="categoryProducts" class="product-grid"></div>
+  <div id="noMatches" style="display:none;margin-top:18px;color:#b03a7b;font-weight:600;">No products in this category.</div>
+</main>
+
+<footer class="footer">
+  <p>© 2025 MongoNest — Crafted with 💜</p>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+// ===== CATEGORY PAGE LOGIC =====
+const categoryProducts = document.getElementById("categoryProducts");
+const categoryButtons = document.getElementById("categoryButtons");
+const noMatches = document.getElementById("noMatches");
+
+// Make sure products array exists
+if (typeof products !== "undefined" && products.length > 0) {
+  // Extract unique categories
+  const categories = [...new Set(products.map(p => p.category.toLowerCase()))];
+
+  // Create buttons dynamically
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+    btn.addEventListener("click", () => showCategory(cat));
+    categoryButtons.appendChild(btn);
+  });
+
+  // Show all products initially
+  displayProducts(products, categoryProducts);
+} else {
+  categoryProducts.innerHTML = "<p style='color:#b03a7b;text-align:center;'>No products available.</p>";
+}
+
+// Function to show products of a selected category
+function showCategory(cat) {
+  const filtered = products.filter(p => p.category.toLowerCase() === cat.toLowerCase());
+  if (filtered.length === 0) {
+    noMatches.style.display = "block";
+    categoryProducts.innerHTML = "";
+  } else {
+    noMatches.style.display = "none";
+    displayProducts(filtered, categoryProducts);
+  }
+}
+
+// Reuse displayProducts function from script.js
+function displayProducts(items, container) {
+  container.innerHTML = "";
+  items.forEach(product => {
+    const div = document.createElement("div");
+    div.classList.add("product-card");
+    div.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>$${product.price}</p>
+      <button onclick="addToCart(${product.id})">Add to Cart</button>
+    `;
+    container.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>

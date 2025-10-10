@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MongoNest | Home</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <style>
+    .category-section {
+      padding: 2rem;
+      text-align: center;
+      color: #fff;
+      min-height: 80vh;
+    }
+    .category-section h2 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      background: linear-gradient(90deg, #7b2ff7, #f107a3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .view-all-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #7b2ff7, #f107a3);
+      color: #fff;
+      padding: 0.6rem 1.5rem;
+      border-radius: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 2rem;
+    }
+    .view-all-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      justify-items: center;
+    }
+    .category-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      width: 90%;
+      max-width: 250px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .category-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+    .category-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+    .category-card h3 {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+    .category-card a {
+      text-decoration: none;
+      color: white;
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: linear-gradient(90deg, #7b2ff7, #f107a3);
+      transition: 0.3s;
+    }
+    .category-card a:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h2 id="welcomeUser">Welcome!</h2>
+
+    <div class="logo">MongoNest</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="category.html">Categories</a>
+
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="signup.html" id="signupLink">Signup</a>
+      <a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a>
+      <button id="logoutBtn" class="btn">Logout</button>
+
+      <script>
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("mn_token");
+          window.location.href = "login.html";
+        });
+      </script>
+
+
+    </nav>
+  </header>
+
+
+  <section class="hero">
+    <h1>Discover Products You’ll Love 💜</h1>
+    <p>Explore amazing collections across categories</p>
+
+      <!-- Search input + Cart icon -->
+    <div class="header-actions" style="display:flex; gap:10px; align-items:center;">
+      <input id="searchInput" type="text" placeholder="Search products..." style="padding:8px 10px;border-radius:8px;border:1px solid #eee; outline:none;" />
+
+      <div id="userStatus" style="margin-left:8px;"></div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="products">
+    <h2>Products</h2>
+    <div id="product-container" class="product-grid">
+      <div class="product-card">
+        <img src="images/dress.webp" alt="Dress" />
+        <h3>Dress</h3>
+      </div>
+      <div class="product-card">
+        <img src="images/laptop.jpeg" alt="Electronic" />
+        <h3>Laptop</h3>
+      </div>
+      <div class="product-card">
+        <img src="images/bag.webp" alt="Bag" />
+        <h3>Bags</h3>
+      </div>
+      <div class="product-card">
+        <img src="images/shoe.png" alt="Shoes" />
+        <h3>Shoes</h3>
+      </div>
+      <div class="product-card">
+        <img src="images/grocery.webp" alt="Grocery" />
+        <h3>Grocery</h3>
+      </div>
+      <div class="product-card">
+        <img src="images/watch.jpg" alt="Watch" />
+        <h3>Watch</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About MongoNest</h2>
+    <div class="about-content">
+      <img src="./images/ecommerce.png" alt="About MongoNest" />
+      <p>
+        Welcome to <b>MongoNest</b> — your one-stop online shopping destination for everything from fashion and accessories to groceries and electronics.
+        <br /><br />
+        Built with cutting-edge web technologies and powered by MongoDB, MongoNest ensures speed, security, and a stunning shopping experience that feels magical.
+      </p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 MongoNest — Crafted with 💜</p>
+  </footer>
+
+  <script src="./js/script.js"></script>
+
+  <script>
+  const API_BASE = "http://localhost:5000/api";
+  const token = localStorage.getItem("mn_token");
+
+  // If no token, redirect to login
+  if (!token) {
+    window.location.href = "login.html";
+  } else {
+    // Fetch user profile from backend
+    fetch(API_BASE + "/profile", {
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.username) {
+          // Find the element and insert username
+          document.getElementById("welcomeUser").textContent = `Welcome! ${data.username}`;
+        } else {
+          // Invalid token or user not found
+          window.location.href = "login.html";
+        }
+      })
+      .catch(() => {
+        window.location.href = "login.html";
+      });
+  }
+</script>
+
+</body>
+</html>
+

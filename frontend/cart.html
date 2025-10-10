@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | MongoNest</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .cart-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      color: white;
+    }
+    .cart-container h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.1);
+      padding: 1rem;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+    }
+    .cart-item-details {
+      flex: 1;
+      padding: 0 1rem;
+    }
+    .cart-item-details h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .cart-item button {
+      background: linear-gradient(90deg, #f107a3, #7b2ff7);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .cart-item button:hover {
+      transform: scale(1.05);
+    }
+    .cart-summary {
+      text-align: right;
+      margin-top: 2rem;
+    }
+    .cart-summary h3 {
+      margin-bottom: 1rem;
+    }
+    .checkout-btn, .back-btn {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      border-radius: 1rem;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(90deg, #7b2ff7, #f107a3);
+      margin-left: 0.5rem;
+      transition: transform 0.3s;
+    }
+    .checkout-btn:hover, .back-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">MongoNest</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#categories">Categories</a>
+      <a href="login.html">Login</a>
+      <a href="signup.html">Signup</a>
+      <a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a>
+    </nav>
+  </header>
+
+  <section class="cart-container">
+    <h2>Your Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-summary">
+      <h3>Total: $<span id="cart-total">0</span></h3>
+      <a href="index.html" class="back-btn">← Continue Shopping</a>
+      <a href="#" class="checkout-btn">Checkout</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 MongoNest — Crafted with 💜</p>
+  </footer>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>
