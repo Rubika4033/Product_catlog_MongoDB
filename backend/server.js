@@ -11,13 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 🧠 Connect to MongoDB
+//  Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ MongoDB Error:", err));
 
-// 📝 Signup route
+// Signup route
 app.post("/api/signup", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -39,7 +39,7 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-// 🔑 Login route
+// Login route
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
