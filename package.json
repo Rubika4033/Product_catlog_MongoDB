@@ -1,6 +1,9 @@
 {
-  "name": "product_catlog-frontend",
-  "version": "1.0.0",
+  
+  "name": "product_catlog", 
+  "version": "1.0.0", 
+  "description": "", 
+  "main": "index.js",
   "private": true,
   "dependencies": {
   "react": "^18.2.0",
